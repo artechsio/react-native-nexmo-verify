@@ -5,11 +5,14 @@
 
 @import VerifyIosSdk;
 
+NSString *const AppId = @"ID";
+NSString *const SharedSecretKey = @"KEY";
+
+@interface RNNexmoVerify()
+
+@end
 
 @implementation RNNexmoVerify
-static NSString *AppId = @"";
-static NSString *SharedSecretKey = @"";
-
 
 
 - (dispatch_queue_t)methodQueue
@@ -17,14 +20,18 @@ static NSString *SharedSecretKey = @"";
     return dispatch_get_main_queue();
 }
 
+-()init
+{
+    self = [super init];
+    if (self)
+    {
+        [NexmoClient startWithApplicationId:AppId sharedSecretKey:SharedSecretKey];
+    }
+    return self;
+}
 
 RCT_EXPORT_MODULE()
 
-
-RCT_EXPORT_METHOD(initialize: resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
-{
-    [NexmoClient startWithApplicationId:AppId sharedSecretKey:SharedSecretKey];
-}
 
 
 
