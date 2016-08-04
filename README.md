@@ -35,11 +35,49 @@
   	```
 
 
-## Usage
-```javascript
-import RNNexmoVerify from 'react-native-nexmo-verify';
+----------
 
-// TODO: What do with the module?
-RNNexmoVerify;
-```
-  
+
+**Usage**
+
+    import RNNexmoVerify from 'react-native-nexmo-verify';
+
+API
+
+**Get Verified User**
+
+	let verifyInProgressCB = function() { }
+	let userVerifiedCB = function() { }
+	let errorCB = function(err) { }
+
+    RNNexmoVerify.getVerifiedUser(COUNTRY_CODE, PHONE_NUMBER, verifyInProgressCB, userVerifiedCB, errorCB);
+
+**Check PinCode**
+
+    RNNexmoVerify.checkPinCode(SMS_PIN_CODE);
+
+**Get User Status**
+
+	RNNexmoVerify.getUserStatus(COUNTRY_CODE, PHONE_NUMBER, (err, status) => {});
+
+or
+
+    RNNexmoVerify.getUserStatusPromise(COUNTRY_CODE, PHONE_NUMBER).then((status) => {}, (err) => {});
+**Cancel Verification**
+
+    RNNexmoVerify.cancelVerification((err) => {});
+or
+
+    RNNexmoVerify.cancelVerificationPromise().then((message) => {}, (err) => {});
+**Trigger Next Event**
+
+    RNNexmoVerify.triggerNextEvent((err) => {});
+or
+
+    RNNexmoVerify.triggerNextEventPromise().then((message) => {}, (err) => {});
+**Logout User**
+
+    RNNexmoVerify.logoutUser(COUNTRY_CODE, PHONE_NUMBER, (err) => {});
+or
+
+    RNNexmoVerify.logoutUserPromise(COUNTRY_CODE, PHONE_NUMBER).then((message) => {}, (err) => {});
