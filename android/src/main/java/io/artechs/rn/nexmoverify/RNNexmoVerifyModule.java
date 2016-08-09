@@ -5,15 +5,20 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
 
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.nexmo.sdk.NexmoClient;
 import com.nexmo.sdk.core.client.ClientBuilderException;
 import com.nexmo.sdk.verify.client.VerifyClient;
@@ -35,6 +40,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
   public RNNexmoVerifyModule(ReactApplicationContext reactContext) {
     super(reactContext);
     this.reactContext = reactContext;
+
   }
 
   @Override
@@ -43,35 +49,48 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void initialize(Promise promise) {
+  public void initialize() {
 
     Context context = getReactApplicationContext();
     try {
+
       NexmoClient nexmoClient = new NexmoClient.NexmoClientBuilder()
-              .context(context)
+              .context(getReactApplicationContext())
               .applicationId(Config.AppId)
               .sharedSecretKey(Config.SharedSecretKey)
               .build();
 
       verifyClient = new VerifyClient(nexmoClient);
 
-
-      promise.resolve("done");
+//      promise.resolve("done");
     } catch (ClientBuilderException e) {
 //      e.printStackTrace();
-      promise.reject(e);
+//      promise.reject(e);
     }
 
   }
 
+  private void sendEvent(ReactContext reactContext, String eventName, Object params) {
+    reactContext
+            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+            .emit(eventName, params);
+  }
+
   @ReactMethod
-  public void getVerifiedUser(String countryCode, String phoneNumber, final Callback verifyInProgressCallback, final Callback userVerifiedCallback, final Callback errorCallback) {
+  public void getVerifiedUser(String countryCode, String phoneNumber, final Callback userVerifiedCallback, final Callback errorCallback) {
     verifyClient.getVerifiedUser(countryCode, phoneNumber);
     verifyClient.addVerifyListener(new VerifyClientListener() {
+
+
       @Override
       public void onVerifyInProgress(final VerifyClient verifyClient, UserObject user) {
 
           Log.d("onVerifyInProgress ", "onVerifyInProgress: ");
+        final WritableMap params = Arguments.createMap();
+        params.putString("name", "verification process begins.");
+
+
+        sendEvent(reactContext, "NexmoVerify", params);
 
       }
 
