@@ -96,6 +96,8 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
 
       @Override
       public void onUserVerified(final VerifyClient verifyClient, UserObject user) {
+          Log.d("onUserVerified-USER", user.toString());
+          Log.d("onUserVerified-VERIFYC", verifyClient.toString());
         userVerifiedCallback.invoke("onUserVerified: " + user);
       }
 
@@ -120,7 +122,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
 
   // Get User Status with callback function
   @ReactMethod
-  public void getUserStatus(String countryCode , String phoneNumber, final Callback callback){
+  public void getUserStatus(String countryCode , String phoneNumber, final Callback successCallback, final Callback errorCallback){
 
     verifyClient.getUserStatus(countryCode , phoneNumber, new SearchListener() {
       @Override
@@ -128,7 +130,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
         switch(userStatus){
           case USER_PENDING:{
             // Handle each userStatus accordingly.
-            callback.invoke("userStatus: " +userStatus);
+              successCallback.invoke(null, "userStatus: " +userStatus);
           }
         }
         // other user statuses can be found in the UserStatus class
@@ -137,12 +139,12 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
       @Override
       public void onError(VerifyError errorCode, String errorMessage) {
         // unable to get user status for given device + phone number pair
-        callback.invoke("onError: " + errorMessage);
+          errorCallback.invoke(errorCode, "onError: " + errorMessage);
       }
 
       @Override
       public void onException(IOException e) {
-        callback.invoke("onError: " + e);
+          errorCallback.invoke(e, "onError: " + e);
       }
     });
   }
@@ -183,7 +185,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
       @Override
       public void onSuccess(Command command) {
         // verification request successfully cancelled
-        callback.invoke("verification request successfully cancelled: " + command);
+        callback.invoke(null);
       }
 
       @Override
@@ -229,7 +231,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
       @Override
       public void onSuccess(Command command) {
         // successfully triggered next event
-        callback.invoke("successfully triggered next event: " + command);
+        callback.invoke(null);
       }
 
       @Override
@@ -277,7 +279,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
       @Override
       public void onSuccess(Command command) {
         // successfully logged out user
-        callback.invoke("successfully logged out user: " + command);
+        callback.invoke(null);
       }
 
       @Override
@@ -318,8 +320,13 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
 
   // Verify Stand Alone
   @ReactMethod
-  public void verifyStandAlone(String countryCode, String phoneNumber){
-    verifyClient.verifyStandalone(countryCode, phoneNumber);
+  public void verifyStandAlone(String countryCode, String phoneNumber, Callback successCallback, Callback errorCallback){
+      try {
+          verifyClient.verifyStandalone(countryCode, phoneNumber);
+          successCallback.invoke("user has been successfully verified");
+      }catch (Exception e){
+          errorCallback.invoke("Error during verification: " + e.getMessage());
+      }
   }
 
   //Verify using the managed ux
