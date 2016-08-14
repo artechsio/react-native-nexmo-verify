@@ -10,6 +10,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ObjectAlreadyConsumedException;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
@@ -62,10 +63,9 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
 
       verifyClient = new VerifyClient(nexmoClient);
 
-//      promise.resolve("done");
     } catch (ClientBuilderException e) {
 //      e.printStackTrace();
-//      promise.reject(e);
+      Log.d("error initial", e.getMessage());
     }
 
   }
@@ -96,8 +96,6 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
 
       @Override
       public void onUserVerified(final VerifyClient verifyClient, UserObject user) {
-          Log.d("onUserVerified-USER", user.toString());
-          Log.d("onUserVerified-VERIFYC", verifyClient.toString());
         userVerifiedCallback.invoke("onUserVerified: " + user);
       }
 
@@ -185,7 +183,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
       @Override
       public void onSuccess(Command command) {
         // verification request successfully cancelled
-        callback.invoke(null);
+        callback.invoke();
       }
 
       @Override
@@ -231,7 +229,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
       @Override
       public void onSuccess(Command command) {
         // successfully triggered next event
-        callback.invoke(null);
+        callback.invoke();
       }
 
       @Override
@@ -279,7 +277,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
       @Override
       public void onSuccess(Command command) {
         // successfully logged out user
-        callback.invoke(null);
+        callback.invoke();
       }
 
       @Override

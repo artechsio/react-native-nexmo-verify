@@ -25,6 +25,6 @@ android {
 
 dependencies {
     compile 'com.facebook.react:react-native:0.20.+'
-    compile 'com.nexmo:verify:1.1.0'
+    compile 'com.nexmo:verify:2.0.0'
 }
   
