@@ -41,7 +41,6 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
   public RNNexmoVerifyModule(ReactApplicationContext reactContext) {
     super(reactContext);
     this.reactContext = reactContext;
-
   }
 
   @Override
@@ -51,7 +50,6 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void initialize() {
-
     Context context = getReactApplicationContext();
     try {
 
