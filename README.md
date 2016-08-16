@@ -46,11 +46,10 @@ API
 
 **Get Verified User**
 
-	let verifyInProgressCB = function() { }
 	let userVerifiedCB = function() { }
 	let errorCB = function(err) { }
 
-    RNNexmoVerify.getVerifiedUser(COUNTRY_CODE, PHONE_NUMBER, verifyInProgressCB, userVerifiedCB, errorCB);
+    RNNexmoVerify.getVerifiedUser(COUNTRY_CODE, PHONE_NUMBER, userVerifiedCB, errorCB);
 
 **Check PinCode**
 

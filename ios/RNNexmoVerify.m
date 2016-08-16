@@ -31,10 +31,10 @@ RCT_EXPORT_MODULE()
 
 NSString *getNSError(VerifyError error) {
     
-    int errorCode = -1;
-    NSString *errorDescription = @"Description.";
-    NSString *errorMessage = @"Operation was unsuccessful.";
-    NSString *errorDomain = @"Operation was unsuccessful.";
+    int errorCode = 0;
+    NSString *errorDescription = @"Operation was unsuccessful.";
+    NSString *errorMessage = @"Operation Was Unsuccessful.";
+    NSString *errorDomain = @"OPERATION_WAS_UNSUCCESSFUL";
     
     switch (error) {
         case 1:
@@ -104,7 +104,6 @@ NSString *getNSError(VerifyError error) {
             errorDescription = @"A verification is already in progress!";
             break;
         default:
-            errorCode = 0;
             break;
     }
     
@@ -138,7 +137,8 @@ RCT_EXPORT_METHOD(getVerifiedUser:(NSString *)countryCode
          userVerifiedCallback(@[@"user has been successfully verified."]);
      }
      errorBlock:^(VerifyError error) {
-         errorCallback(@[getNSError(error)]);
+         NSError *e = getNSError(error);
+         errorCallback(@[e.userInfo]);
      }];
 }
 
@@ -161,8 +161,7 @@ RCT_EXPORT_METHOD(getUserStatus:(NSString *)countryCode
          if (error != nil) {
              return errorCallback(@[error.userInfo]);
          }
-         successCallback(@[status ]);
-         
+         successCallback(@[status]);
      }];
 }
 
@@ -176,7 +175,7 @@ RCT_EXPORT_METHOD(getUserStatusPromise:(NSString *)countryCode
      WithNumber:phoneNumber
      WithBlock:^(NSString *status, NSError *error) {
          if (error != nil) {
-             return reject(ERROR_DOMAIN, @"unable to get user status", error.userInfo);
+             return reject(ERROR_DOMAIN, @"Unable to get user status", error.userInfo);
          }
          resolve(status);
      }];
@@ -294,7 +293,8 @@ RCT_EXPORT_METHOD(verifyStandAlone:(NSString *)countryCode
          userVerifiedCallback(@"userVerifiedCallback");
      }
      errorBlock:^(VerifyError error) {
-         errorCallback(@"error occurs during verification");
+         NSError *e = getNSError(error);
+         errorCallback(@[e.userInfo]);
      }];
 }
 
