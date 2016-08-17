@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B0B2C1AA1D52211000892393 /* DeviceProperties.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0B2C1A71D52211000892393 /* DeviceProperties.framework */; };
-		B0B2C1AB1D52211000892393 /* RequestSigning.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0B2C1A81D52211000892393 /* RequestSigning.framework */; };
-		B0B2C1AC1D52211000892393 /* VerifyIosSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0B2C1A91D52211000892393 /* VerifyIosSdk.framework */; };
+		B0D86C0A1D644F87006C65C5 /* DeviceProperties.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D86C071D644F87006C65C5 /* DeviceProperties.framework */; };
+		B0D86C0B1D644F87006C65C5 /* RequestSigning.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D86C081D644F87006C65C5 /* RequestSigning.framework */; };
+		B0D86C0C1D644F87006C65C5 /* VerifyIosSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D86C091D644F87006C65C5 /* VerifyIosSdk.framework */; };
 		B3E7B58A1CC2AC0600A0062D /* RNNexmoVerify.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNNexmoVerify.m */; };
 /* End PBXBuildFile section */
 
@@ -27,9 +27,9 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libRNNexmoVerify.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNNexmoVerify.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B0B2C1A71D52211000892393 /* DeviceProperties.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DeviceProperties.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/VoterIM-bfcmhvmqnkyvvoftzbhdahzrkkks/Build/Products/Debug-iphonesimulator/DeviceProperties.framework"; sourceTree = "<group>"; };
-		B0B2C1A81D52211000892393 /* RequestSigning.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RequestSigning.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/VoterIM-bfcmhvmqnkyvvoftzbhdahzrkkks/Build/Products/Debug-iphonesimulator/RequestSigning.framework"; sourceTree = "<group>"; };
-		B0B2C1A91D52211000892393 /* VerifyIosSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VerifyIosSdk.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/VoterIM-bfcmhvmqnkyvvoftzbhdahzrkkks/Build/Products/Debug-iphonesimulator/VerifyIosSdk.framework"; sourceTree = "<group>"; };
+		B0D86C071D644F87006C65C5 /* DeviceProperties.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DeviceProperties.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/VoterIM-bfcmhvmqnkyvvoftzbhdahzrkkks/Build/Products/Debug-iphonesimulator/DeviceProperties.framework"; sourceTree = "<group>"; };
+		B0D86C081D644F87006C65C5 /* RequestSigning.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RequestSigning.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/VoterIM-bfcmhvmqnkyvvoftzbhdahzrkkks/Build/Products/Debug-iphonesimulator/RequestSigning.framework"; sourceTree = "<group>"; };
+		B0D86C091D644F87006C65C5 /* VerifyIosSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VerifyIosSdk.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/VoterIM-bfcmhvmqnkyvvoftzbhdahzrkkks/Build/Products/Debug-iphonesimulator/VerifyIosSdk.framework"; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* RNNexmoVerify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNexmoVerify.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNNexmoVerify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNexmoVerify.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -39,9 +39,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0B2C1AA1D52211000892393 /* DeviceProperties.framework in Frameworks */,
-				B0B2C1AB1D52211000892393 /* RequestSigning.framework in Frameworks */,
-				B0B2C1AC1D52211000892393 /* VerifyIosSdk.framework in Frameworks */,
+				B0D86C0A1D644F87006C65C5 /* DeviceProperties.framework in Frameworks */,
+				B0D86C0B1D644F87006C65C5 /* RequestSigning.framework in Frameworks */,
+				B0D86C0C1D644F87006C65C5 /* VerifyIosSdk.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,9 +69,9 @@
 		B0B2C1A61D5220B600892393 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B0B2C1A71D52211000892393 /* DeviceProperties.framework */,
-				B0B2C1A81D52211000892393 /* RequestSigning.framework */,
-				B0B2C1A91D52211000892393 /* VerifyIosSdk.framework */,
+				B0D86C071D644F87006C65C5 /* DeviceProperties.framework */,
+				B0D86C081D644F87006C65C5 /* RequestSigning.framework */,
+				B0D86C091D644F87006C65C5 /* VerifyIosSdk.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -220,7 +220,8 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../../../React/**",
-					"$(SRCROOT)/../../react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native/**",
+					"/Users/emps/projects/voter.im/mobile/node_modules/react-native/**",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
@@ -236,7 +237,8 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../../../React/**",
-					"$(SRCROOT)/../../react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native/**",
+					"/Users/emps/projects/voter.im/mobile/node_modules/react-native/**",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";

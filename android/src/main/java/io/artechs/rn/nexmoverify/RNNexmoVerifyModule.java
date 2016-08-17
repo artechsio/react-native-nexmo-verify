@@ -125,12 +125,14 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
     verifyClient.getUserStatus(countryCode , phoneNumber, new SearchListener() {
       @Override
       public void onUserStatus(UserStatus userStatus) {
-        switch(userStatus){
-          case USER_PENDING:{
-            // Handle each userStatus accordingly.
-              successCallback.invoke(null, "userStatus: " +userStatus);
-          }
-        }
+        successCallback.invoke(null, "userStatus: " +userStatus);
+
+//        switch(userStatus){
+//          case USER_PENDING:{
+//            // Handle each userStatus accordingly.
+//              successCallback.invoke(null, "userStatus: " +userStatus);
+//          }
+//        }
         // other user statuses can be found in the UserStatus class
       }
 
@@ -154,12 +156,13 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
     verifyClient.getUserStatus(countryCode , phoneNumber, new SearchListener() {
       @Override
       public void onUserStatus(UserStatus userStatus) {
-        switch(userStatus){
-          case USER_PENDING:{
-            // Handle each userStatus accordingly.
-            promise.resolve("userStatus: " + userStatus);
-          }
-        }
+        promise.resolve("userStatus: " + userStatus);
+//        switch(userStatus){
+//          case USER_PENDING:{
+//            // Handle each userStatus accordingly.
+//            promise.resolve("userStatus: " + userStatus);
+//          }
+//        }
         // other user statuses can be found in the UserStatus class
       }
 
