@@ -149,7 +149,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
 
   // Get User Status with promise function
   @ReactMethod
-  public void getUserStatusPromise(String countryCode , String phoneNumber, final Promise promise){
+  public void getUserStatus(String countryCode , String phoneNumber, final Promise promise){
 
     verifyClient.getUserStatus(countryCode , phoneNumber, new SearchListener() {
       @Override
@@ -202,7 +202,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
 
   // Cancel Verification with Promise function
   @ReactMethod
-  public void cancelVerificationPromise(String countryCode, String phoneNumber, final Promise promise){
+  public void cancelVerification(String countryCode, String phoneNumber, final Promise promise){
     verifyClient.command(countryCode, phoneNumber, Command.LOGOUT, new CommandListener() {
       @Override
       public void onSuccess(Command command) {
@@ -249,7 +249,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
 
   // Trigger Next Event with Promise function
   @ReactMethod
-  public void triggerNextEventPromise(String countryCode, String phoneNumber, final Promise promise){
+  public void triggerNextEvent(String countryCode, String phoneNumber, final Promise promise){
     verifyClient.command(countryCode, phoneNumber, Command.TRIGGER_NEXT_EVENT, new CommandListener() {
       @Override
       public void onSuccess(Command command) {
@@ -296,7 +296,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
 
   //Logout User with Promise function
   @ReactMethod
-  public void logoutUserPromise(String countryCode, String phoneNumber, final Promise promise){
+  public void logoutUser(String countryCode, String phoneNumber, final Promise promise){
     verifyClient.command(countryCode, phoneNumber, Command.LOGOUT, new CommandListener() {
       @Override
       public void onSuccess(Command command) {
