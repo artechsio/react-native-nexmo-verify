@@ -1,23 +1,18 @@
 
 package io.artechs.rn.nexmoverify;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
+import android.os.Looper;
 import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.ObjectAlreadyConsumedException;
+import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
-import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
 
+import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.nexmo.sdk.NexmoClient;
@@ -33,7 +28,7 @@ import com.nexmo.sdk.verify.event.VerifyError;
 
 import java.io.IOException;
 
-public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
+public class RNNexmoVerifyModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
 
   private final ReactApplicationContext reactContext;
   private VerifyClient verifyClient;
@@ -41,18 +36,9 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
   public RNNexmoVerifyModule(ReactApplicationContext reactContext) {
     super(reactContext);
     this.reactContext = reactContext;
-  }
-
-  @Override
-  public String getName() {
-    return "RNNexmoVerify";
-  }
-
-  @ReactMethod
-  public void initialize() {
-    Context context = getReactApplicationContext();
+    reactContext.addLifecycleEventListener(this);
     try {
-
+      Looper.prepare();
       NexmoClient nexmoClient = new NexmoClient.NexmoClientBuilder()
               .context(getReactApplicationContext())
               .applicationId(Config.AppId)
@@ -63,10 +49,51 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
 
     } catch (ClientBuilderException e) {
 //      e.printStackTrace();
-      Log.d("error initial", e.getMessage());
     }
-
   }
+  @Override
+  public void onHostResume() {
+    // Activity `onResume`
+//    Log.d("Activity onResume::::", "Activity `onResume");
+  }
+
+  @Override
+  public void onHostPause() {
+    // Activity `onPause`
+//    Log.d("Activity onPause::::", "Activity `onPause");
+  }
+
+  @Override
+  public void onHostDestroy() {
+    // Activity `onDestroy`
+//    Log.d("Activity onDestroy::::", "Activity `onDestroy");
+  }
+
+
+  @Override
+  public String getName() {
+    return "RNNexmoVerify";
+  }
+
+//  @ReactMethod
+//  public void initialize() {
+//    Context context = getReactApplicationContext();
+//    try {
+//
+//      NexmoClient nexmoClient = new NexmoClient.NexmoClientBuilder()
+//              .context(getReactApplicationContext())
+//              .applicationId(Config.AppId)
+//              .sharedSecretKey(Config.SharedSecretKey)
+//              .build();
+//
+//      verifyClient = new VerifyClient(nexmoClient);
+//
+//    } catch (ClientBuilderException e) {
+////      e.printStackTrace();
+//      Log.d("error initial", e.getMessage());
+//    }
+//
+//  }
 
   private void sendEvent(ReactContext reactContext, String eventName, Object params) {
     reactContext
@@ -149,7 +176,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
 
   // Get User Status with promise function
   @ReactMethod
-  public void getUserStatus(String countryCode , String phoneNumber, final Promise promise){
+  public void getUserStatusPromise(String countryCode , String phoneNumber, final Promise promise){
 
     verifyClient.getUserStatus(countryCode , phoneNumber, new SearchListener() {
       @Override
@@ -202,7 +229,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
 
   // Cancel Verification with Promise function
   @ReactMethod
-  public void cancelVerification(String countryCode, String phoneNumber, final Promise promise){
+  public void cancelVerificationPromise(String countryCode, String phoneNumber, final Promise promise){
     verifyClient.command(countryCode, phoneNumber, Command.LOGOUT, new CommandListener() {
       @Override
       public void onSuccess(Command command) {
@@ -249,7 +276,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
 
   // Trigger Next Event with Promise function
   @ReactMethod
-  public void triggerNextEvent(String countryCode, String phoneNumber, final Promise promise){
+  public void triggerNextEventPromise(String countryCode, String phoneNumber, final Promise promise){
     verifyClient.command(countryCode, phoneNumber, Command.TRIGGER_NEXT_EVENT, new CommandListener() {
       @Override
       public void onSuccess(Command command) {
@@ -296,7 +323,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule {
 
   //Logout User with Promise function
   @ReactMethod
-  public void logoutUser(String countryCode, String phoneNumber, final Promise promise){
+  public void logoutUserPromise(String countryCode, String phoneNumber, final Promise promise){
     verifyClient.command(countryCode, phoneNumber, Command.LOGOUT, new CommandListener() {
       @Override
       public void onSuccess(Command command) {
