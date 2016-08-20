@@ -6,8 +6,8 @@
 
 @import VerifyIosSdk;
 
-NSString *const AppId = @"f19d37a7-23e0-4efe-bbb2-9b0e2910a24f";
-NSString *const SharedSecretKey = @"d5eb1a031942c37";
+NSString *const AppId = @"92e4e8ca-cff8-46f1-9b27-4990024a86e1";
+NSString *const SharedSecretKey = @"7966579094f60b8";
 NSString *const ERROR_DOMAIN = @"Nexmo";
 
 
@@ -112,13 +112,6 @@ NSString *getNSError(VerifyError error) {
     return nserror;
 }
 
-// Check PinCode
-RCT_EXPORT_METHOD(initialize)
-{
-    
-}
-
-
 // Get Verified User
 RCT_EXPORT_METHOD(getVerifiedUser:(NSString *)countryCode
                   phoneNumber:(NSString *)phoneNumber
@@ -141,6 +134,31 @@ RCT_EXPORT_METHOD(getVerifiedUser:(NSString *)countryCode
          errorCallback(@[e.userInfo]);
      }];
 }
+
+
+// Get Verified User
+RCT_EXPORT_METHOD(getVerifiedUserPromise:(NSString *)countryCode
+                  phoneNumber:(NSString *)phoneNumber
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject)
+{
+    [VerifyClient
+     getVerifiedUserWithCountryCode:countryCode
+     phoneNumber:phoneNumber
+     verifyInProgressBlock:^{
+         NSString *eventName = @"verification process begins.";
+         [self.bridge.eventDispatcher sendAppEventWithName:@"NexmoVerify" body:@{@"name": eventName}];
+     }
+     userVerifiedBlock:^{
+         resolve(@"user has been successfully verified.");
+     }
+     errorBlock:^(VerifyError error) {
+          NSError *e = getNSError(error);
+         return reject(ERROR_DOMAIN, @"Unable to get user status", e.userInfo);
+     }];
+}
+
+
 
 // Check PinCode
 RCT_EXPORT_METHOD(checkPinCode:(NSString *)code)
@@ -205,7 +223,7 @@ RCT_EXPORT_METHOD(cancelVerificationPromise:(NSString *)countryCode
 {
     [VerifyClient cancelVerificationWithBlock:^(NSError *error) {
         if (error != nil) {
-            return reject(ERROR_DOMAIN, @"unable to cancel the current verification request", error.userInfo);
+            return reject(nil, nil, error.userInfo);
         }
         resolve(@"verification request successfully cancelled");
     }];

@@ -100,7 +100,6 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule implements L
             .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
             .emit(eventName, params);
   }
-
   @ReactMethod
   public void getVerifiedUser(String countryCode, String phoneNumber, final Callback userVerifiedCallback, final Callback errorCallback) {
     verifyClient.getVerifiedUser(countryCode, phoneNumber);
@@ -110,7 +109,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule implements L
       @Override
       public void onVerifyInProgress(final VerifyClient verifyClient, UserObject user) {
 
-          Log.d("onVerifyInProgress ", "onVerifyInProgress: ");
+        Log.d("onVerifyInProgress ", "onVerifyInProgress: ");
         final WritableMap params = Arguments.createMap();
         params.putString("name", "verification process begins.");
 
@@ -132,6 +131,43 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule implements L
       @Override
       public void onException(final IOException exception) {
         errorCallback.invoke(exception);
+      }
+    });
+  }
+
+  @ReactMethod
+  public void getVerifiedUserPromise(String countryCode, String phoneNumber, final Promise promise) {
+    verifyClient.getVerifiedUser(countryCode, phoneNumber);
+    verifyClient.addVerifyListener(new VerifyClientListener() {
+
+
+      @Override
+      public void onVerifyInProgress(final VerifyClient verifyClient, UserObject user) {
+
+          Log.d("onVerifyInProgress ", "onVerifyInProgress: ");
+        final WritableMap params = Arguments.createMap();
+        params.putString("name", "verification process begins.");
+
+
+        sendEvent(reactContext, "NexmoVerify", params);
+
+      }
+
+      @Override
+      public void onUserVerified(final VerifyClient verifyClient, UserObject user) {
+        promise.resolve("userStatus: " + user);
+      }
+
+      @Override
+      public void onError(final VerifyClient verifyClient, final com.nexmo.sdk.verify.event.VerifyError errorCode, UserObject user) {
+
+        promise.reject("errorMessage: " + errorCode);
+      }
+
+      @Override
+      public void onException(final IOException exception) {
+
+        promise.reject("errorMessage: " + exception);
       }
     });
   }
