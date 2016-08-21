@@ -31,6 +31,7 @@ import java.io.IOException;
 public class RNNexmoVerifyModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
 
   private final ReactApplicationContext reactContext;
+
   private VerifyClient verifyClient;
 
   public RNNexmoVerifyModule(ReactApplicationContext reactContext) {
@@ -38,7 +39,10 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule implements L
     this.reactContext = reactContext;
     reactContext.addLifecycleEventListener(this);
     try {
-      Looper.prepare();
+      if (Looper.myLooper() == null) {
+        Looper.prepare();
+      }
+
       NexmoClient nexmoClient = new NexmoClient.NexmoClientBuilder()
               .context(getReactApplicationContext())
               .applicationId(Config.AppId)
@@ -65,6 +69,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule implements L
 
   @Override
   public void onHostDestroy() {
+
     // Activity `onDestroy`
 //    Log.d("Activity onDestroy::::", "Activity `onDestroy");
   }

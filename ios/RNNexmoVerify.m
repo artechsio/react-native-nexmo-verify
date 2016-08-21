@@ -6,8 +6,8 @@
 
 @import VerifyIosSdk;
 
-NSString *const AppId = @"92e4e8ca-cff8-46f1-9b27-4990024a86e1";
-NSString *const SharedSecretKey = @"7966579094f60b8";
+NSString *const AppId = @"19f4fa83-3c9c-46fb-acf8-5f6b458f5b28";
+NSString *const SharedSecretKey = @"ffbf69a5c883916";
 NSString *const ERROR_DOMAIN = @"Nexmo";
 
 
