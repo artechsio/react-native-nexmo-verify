@@ -80,26 +80,6 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule implements L
     return "RNNexmoVerify";
   }
 
-//  @ReactMethod
-//  public void initialize() {
-//    Context context = getReactApplicationContext();
-//    try {
-//
-//      NexmoClient nexmoClient = new NexmoClient.NexmoClientBuilder()
-//              .context(getReactApplicationContext())
-//              .applicationId(Config.AppId)
-//              .sharedSecretKey(Config.SharedSecretKey)
-//              .build();
-//
-//      verifyClient = new VerifyClient(nexmoClient);
-//
-//    } catch (ClientBuilderException e) {
-////      e.printStackTrace();
-//      Log.d("error initial", e.getMessage());
-//    }
-//
-//  }
-
   private void sendEvent(ReactContext reactContext, String eventName, Object params) {
     reactContext
             .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
@@ -170,10 +150,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule implements L
       }
 
       @Override
-      public void onException(final IOException exception) {
-
-        promise.reject("errorMessage: " + exception);
-      }
+      public void onException(final IOException exception) { Log.d("errorMessage: ",exception.getMessage());}
     });
   }
 
@@ -240,7 +217,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule implements L
 
       @Override
       public void onException(IOException e) {
-        promise.reject("errorMessage: " + e);
+        Log.d("errorMessage: ", e.getMessage());
       }
     });
   }
@@ -285,9 +262,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule implements L
       }
 
       @Override
-      public void onException(IOException e) {
-        promise.reject("something went wrong whilst attempting to cancel the current verification request: " + e);
-      }
+      public void onException(IOException e) { Log.d("Cancel Exception:", e.getMessage()); }
     });
   }
 
@@ -310,7 +285,6 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule implements L
       @Override
       public void onException(IOException e) {
         callback.invoke("unable to trigger next event: " + e);
-
       }
     });
   }
@@ -333,7 +307,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule implements L
 
       @Override
       public void onException(IOException e) {
-        promise.reject("unable to trigger next event: " + e);
+        Log.d("trigger next Exeption:",e.getMessage());
 
       }
     });
@@ -380,7 +354,7 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule implements L
 
       @Override
       public void onException(IOException e) {
-        promise.reject("unable to logout user: " + e);
+        Log.d("unable to logout user: ", e.getMessage());
       }
     });
   }
