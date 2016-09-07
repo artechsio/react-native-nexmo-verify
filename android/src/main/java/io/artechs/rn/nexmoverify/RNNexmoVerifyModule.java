@@ -33,6 +33,8 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule implements L
   private final ReactApplicationContext reactContext;
 
   private VerifyClient verifyClient;
+  private boolean listenerAdded = false;
+  private VerifyClientListener varifyListener;
 
   public RNNexmoVerifyModule(ReactApplicationContext reactContext) {
     super(reactContext);
@@ -123,13 +125,17 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule implements L
   @ReactMethod
   public void getVerifiedUserPromise(String countryCode, String phoneNumber, final Promise promise) {
     verifyClient.getVerifiedUser(countryCode, phoneNumber);
-    verifyClient.addVerifyListener(new VerifyClientListener() {
+    if (listenerAdded) {
+      verifyClient.removeVerifyListener(varifyListener);
+    }
+
+    varifyListener = new VerifyClientListener() {
 
 
       @Override
       public void onVerifyInProgress(final VerifyClient verifyClient, UserObject user) {
 
-          Log.d("onVerifyInProgress ", "onVerifyInProgress: ");
+        Log.d("onVerifyInProgress ", "onVerifyInProgress: ");
         final WritableMap params = Arguments.createMap();
         params.putString("name", "verification process begins.");
 
@@ -151,7 +157,9 @@ public class RNNexmoVerifyModule extends ReactContextBaseJavaModule implements L
 
       @Override
       public void onException(final IOException exception) { Log.d("errorMessage: ",exception.getMessage());}
-    });
+    };
+    verifyClient.addVerifyListener(varifyListener);
+    listenerAdded = true;
   }
 
   //Check PinCode
